@@ -2,9 +2,9 @@ const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 
-const productRoutes = require('./routes/userproductRoutes');
-const userloginRoutes = require('./routes/usersigninRoutes');
-const usersigninRoutes = require('./routes/usersigninRoutes');
+const productRoutes = require('./routes/userproductRoutes.js');
+const userloginRoutes = require('./routes/usersigninRoutes.js');
+const usersigninRoutes = require('./routes/usersigninRoutes.js');
 
 const app = express();
 app.use(express.json());
@@ -25,7 +25,11 @@ mongoose.connect(MONGOURL)
         console.log(error);
     });
 
-app.use('/admin/usersLogin', usersigninRoutes);
-app.use('/admin/usersSignin', usersigninRoutes);
 
-app.use('/product', productRoutes);
+    
+
+app.use('/admin', usersigninRoutes);
+app.use('/admin', productRoutes);
+
+
+

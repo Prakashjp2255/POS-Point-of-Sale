@@ -3,10 +3,10 @@ const router = express.Router();
 const usersigninController = require('../controller/usersigninController');
 const protecting =  require ('../authenticate/authentication');
 
-router.post('/signup', usersigninController.createUser);
+router.post('/users/signup', usersigninController.createUser);
 router.get('/users', usersigninController.fetchUsers);
 router.put('/users/:id', usersigninController.updateUser);
 router.delete('/users/:id', usersigninController.deleteUser);
-router.post('/login', usersigninController.loginUser);
+router.post('/users/login', usersigninController.loginUser);
 module.exports = router;
 
