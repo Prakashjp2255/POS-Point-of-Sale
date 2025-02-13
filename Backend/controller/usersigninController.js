@@ -27,6 +27,23 @@ exports.createUser = async (req, res) => {
     }
 };
 
+//get fetchusersbyid 
+exports.fetchUsersbyid = async(req,res) => {
+    try{
+        const users = await userModel.findById(req.params.id);
+        if (!users) {
+            return res.status(400).json({message : "user not found"})
+        }
+        res.status(200).json(users)
+
+    }catch (error) {
+        console.log("Error fetchingusersbyid" , error);
+        return res.status (500).json({error})
+    }
+
+};
+
+
 // Fetch all users
 exports.fetchUsers = async (req, res) => {
     try {
@@ -37,7 +54,7 @@ exports.fetchUsers = async (req, res) => {
         res.status(200).json(users);
     } catch (error) {
         console.error("Error fetching users:", error); // Added log
-        res.status(500).json({ error: "INTERNAL SERVER ERROR." });
+        res.status(500).json({ error });
     }
 };
 
