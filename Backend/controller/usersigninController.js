@@ -117,6 +117,7 @@ exports.loginUser = async (req, res) => {
 
     } catch (error) {
         console.error("Error during login:", error); // Added log
-        return res.status(500).json({ error: "INTERNAL SERVER ERROR" });
+
+        return res.status(500).json({ error });
     }
 };

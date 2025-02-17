@@ -10,9 +10,9 @@ const { protect } = require('../authenticate/authentication');
 
 
 router.post('/product',protect, createProduct);
-router.get('/product', protect, getProduct);
-router.get('/getproductbyid/:id', protect, getProductById);
-router.put('/updateproduct/:id', protect, updateProduct);
-router.delete('/deleteproduct/:id', protect, deleteProduct);
+router.get('/products', protect, getProduct);
+router.get('/product/:id', protect, getProductById);
+router.put('/product/:id/update', protect, updateProduct);
+router.delete('/product/:id/delete', protect, deleteProduct);
 
 module.exports = router;

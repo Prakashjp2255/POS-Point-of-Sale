@@ -17,6 +17,9 @@ const productshow = new mongoose.Schema ( {
         type : String ,
         required : true
     },
+    // quantity ithula vakalama ?
+    inventories: [{ type: mongoose.Schema.Types.ObjectId, ref: "inventoryModel" }]
+
 })
 
 module.exports = mongoose.model ("product" , productshow);

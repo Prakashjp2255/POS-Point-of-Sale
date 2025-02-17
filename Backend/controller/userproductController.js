@@ -25,9 +25,10 @@ exports.getProduct = async (req, res) => {
 };
 
 // Get a product by ID
+// Get a product by ID with inventory details
 exports.getProductById = async (req, res) => {
     try {
-        const product = await productModel.findById(req.params.id);
+        const product = await productModel.findById(req.params.id).populate('inventories');
         if (!product) {
             return res.status(404).json({ message: "Product not found." });
         }
@@ -37,6 +38,7 @@ exports.getProductById = async (req, res) => {
         res.status(500).json({ error });
     }
 };
+
 
 // Update a product
 exports.updateProduct = async (req, res) => {
