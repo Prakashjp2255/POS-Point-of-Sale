@@ -1,5 +1,6 @@
 const productModel = require("../model/productModel");
-
+const mongoose = require('mongoose');
+const inventoryModel = require("../model/inventoryModel.js");
 // Add a new product
 exports.createProduct = async (req, res) => {
     try {
@@ -28,7 +29,12 @@ exports.getProduct = async (req, res) => {
 // Get a product by ID with inventory details
 exports.getProductById = async (req, res) => {
     try {
-        const product = await productModel.findById(req.params.id).populate('inventories');
+        const product = await productModel.findById(req.params.id).populate({
+            path: "inventories",
+            select: 'quantity',
+        });
+        console.log("Fetching product with ID:", req.params.id);
+
         if (!product) {
             return res.status(404).json({ message: "Product not found." });
         }
@@ -38,7 +44,6 @@ exports.getProductById = async (req, res) => {
         res.status(500).json({ error });
     }
 };
-
 
 // Update a product
 exports.updateProduct = async (req, res) => {

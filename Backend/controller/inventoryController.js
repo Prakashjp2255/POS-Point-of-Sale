@@ -7,16 +7,22 @@ exports.createItem = async (req, res) => {
     try {
         const inventory = new inventoryModel(req.body);
         const savedInventory = await inventory.save();
-        
+
         // Add the inventory to the product's inventories array
-        await productModel.findByIdAndUpdate(req.body.product, { $push: { inventories: savedInventory._id } });
-        
-        res.status(201).json(savedInventory);
+        await productModel.findByIdAndUpdate(req.body.product, { 
+            $push: { inventories: savedInventory._id } 
+        });
+
+        // Fetch inventory again with populated product details
+        const populatedInventory = await inventoryModel.findById(savedInventory._id).populate("product");
+
+        return res.status(201).json(populatedInventory);
     } catch (error) {
         console.error("Error creating inventory item:", error);
         res.status(500).json({ error: "INTERNAL SERVER ERROR" });
     }
 };
+
 
 // Get all items
 exports.getItems = async (req, res) => {
@@ -30,13 +36,38 @@ exports.getItems = async (req, res) => {
 };
 
 // Get an inventory by ID with product details
+// exports.getItemById = async (req, res) => {
+//     try {
+//         const inventory = await inventoryModel.findById(req.params.id).populate('product');
+//         if (!inventory) {
+//             return res.status(404).json({ error: 'Inventory item not found' });
+//         }
+//         res.status(200).json(inventory);
+//     } catch (error) {
+//         console.error("Error getting item:", error);
+//         res.status(500).json({ error: "INTERNAL SERVER ERROR" });
+//     }
+// };
+
+
+// Get an inventory by ID with product details
 exports.getItemById = async (req, res) => {
     try {
-        const inventory = await inventoryModel.findById(req.params.id).populate('product');
+        const inventory = await inventoryModel.findById(req.params.id)
+            .populate({
+                path: 'product',
+                select: '_id name price' // Select specific fields to populate
+            });
         if (!inventory) {
-            return res.status(404).json({ error: 'Inventory item not found' });
+            return res.status(404).json({ error: 'Inventory item not' });
         }
-        res.status(200).json(inventory);
+        const result = {
+            _id: inventory._id,
+            products: [inventory.product],
+            quantity: inventory.quantity,
+            lastUpdated: inventory.updatedAt // Assuming you have timestamps enabled in your schema
+        };
+        res.status(200).json(result);
     } catch (error) {
         console.error("Error getting item:", error);
         res.status(500).json({ error: "INTERNAL SERVER ERROR" });
