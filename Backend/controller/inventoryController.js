@@ -2,26 +2,46 @@ const inventoryModel = require("../model/inventoryModel.js");
 const productModel = require("../model/productModel.js");
 const mongoose = require('mongoose');
 
-// Create a new inventory item
-exports.createItem = async (req, res) => {
-    try {
+
+// for some my purose ill check the post 
+exports.createItem = async (req ,res) => {
+    try{
         const inventory = new inventoryModel(req.body);
         const savedInventory = await inventory.save();
-
-        // Add the inventory to the product's inventories array
-        await productModel.findByIdAndUpdate(req.body.product, { 
+        await productModel.findByIdAndUpdate(req.body.product,{
             $push: { inventories: savedInventory._id } 
         });
 
-        // Fetch inventory again with populated product details
         const populatedInventory = await inventoryModel.findById(savedInventory._id).populate("product");
-
         return res.status(201).json(populatedInventory);
-    } catch (error) {
-        console.error("Error creating inventory item:", error);
-        res.status(500).json({ error: "INTERNAL SERVER ERROR" });
+
+    }catch (error){
+        res.status(400).json({error})
     }
-};
+}
+
+// Create a new inventory item
+
+
+// exports.createItem = async (req, res) => {
+//     try {
+//         const inventory = new inventoryModel(req.body);
+//         const savedInventory = await inventory.save();
+
+//         // Add the inventory to the product's inventories array
+        // await productModel.findByIdAndUpdate(req.body.product, { 
+        //     $push: { inventories: savedInventory._id } 
+        // });
+
+//         // Fetch inventory again with populated product details
+//         const populatedInventory = await inventoryModel.findById(savedInventory._id).populate("product");
+
+//         return res.status(201).json(populatedInventory);
+//     } catch (error) {
+//         console.error("Error creating inventory item:", error);
+//         res.status(500).json({ error: "INTERNAL SERVER ERROR" });
+//     }
+// };
 
 
 // Get all items

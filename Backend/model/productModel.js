@@ -17,17 +17,7 @@ const productshow = new mongoose.Schema ( {
         type : String ,
         required : true
     },
-    expirydate: {
-       type : Date ,
-       required : true
-    },
-    quantity:{
-        type : Number ,
-        required : true
-    },
 
-    // quantity ithula vakalama ?
-    inventories: [{ type: mongoose.Schema.Types.ObjectId, ref: "Inventory" }]
 
 })
 

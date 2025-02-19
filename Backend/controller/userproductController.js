@@ -29,10 +29,7 @@ exports.getProduct = async (req, res) => {
 // Get a product by ID with inventory details
 exports.getProductById = async (req, res) => {
     try {
-        const product = await productModel.findById(req.params.id).populate({
-            path: "inventories",
-            select: 'quantity',
-        });
+        const product = await productModel.findById(req.params.id);
         console.log("Fetching product with ID:", req.params.id);
 
         if (!product) {
