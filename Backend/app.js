@@ -5,7 +5,8 @@ const dotenv = require("dotenv");
 const productRoutes = require('./routes/userproductRoutes.js');
 const userloginRoutes = require('./routes/usersigninRoutes.js');
 const usersigninRoutes = require('./routes/usersigninRoutes.js');
-const inventoryRoute = require ('./routes/inventoryRoutes.js')
+const inventoryRoutes = require ('./routes/inventoryRoutes.js');
+const taxRoutes = require ('./routes/taxRoutes.js');
 
 const app = express();
 app.use(express.json());
@@ -30,8 +31,9 @@ mongoose.connect(MONGOURL)
     
 
 app.use('/', usersigninRoutes);
-app.use('/admin',  productRoutes);
-app.use('/admin' , inventoryRoute);
+app.use('/admin/users',  productRoutes);
+app.use('/admin/users' , inventoryRoutes);
+app.use('/admin/users' , taxRoutes);
 
 
 

@@ -1,10 +1,14 @@
 const productModel = require("../model/productModel");
 const mongoose = require('mongoose');
+const tax =require ("../model/taxModel");
+const taxModel = require("../model/taxModel");
 // Add a new product
 exports.createProduct = async (req, res) => {
     try {
         const product = new productModel(req.body);
         const savedProduct = await product.save();
+        // tax model include
+        await taxModel.findByIdAndUpdate(req.body.tax, {product : savedProduct._id});
         console.log(savedProduct)
         res.status(201).json(savedProduct);
 
@@ -17,7 +21,7 @@ exports.createProduct = async (req, res) => {
 // Get all products
 exports.getProduct = async (req, res) => {
     try {
-        const products = await productModel.find();
+        const products = await productModel.find().populate('tax');
         res.status(200).json(products);
     } catch (error) {
         console.error("Error fetching products:", error);
@@ -29,7 +33,7 @@ exports.getProduct = async (req, res) => {
 // Get a product by ID with inventory details
 exports.getProductById = async (req, res) => {
     try {
-        const product = await productModel.findById(req.params.id);
+        const product = await productModel.findById(req.params.id).populate('tax');
         console.log("Fetching product with ID:", req.params.id);
 
         if (!product) {
@@ -49,6 +53,7 @@ exports.updateProduct = async (req, res) => {
         if (!product) {
             return res.status(404).json({ message: "Product not found." });
         }
+        await taxModel.findByIdAndUpdate(req.body.tax , {product : product._id})
         res.status(200).json(product);
     } catch (error) {
         console.error("Error updating product:", error);
@@ -63,6 +68,7 @@ exports.deleteProduct = async (req, res) => {
         if (!product) {
             return res.status(404).json({ message: "Product not found." });
         }
+        await taxModel.findByIdAndDelete(product.tax);
         res.status(200).json({ message: "Successfully deleted product." });
     } catch (error) {
         console.error("Error deleting product:", error);

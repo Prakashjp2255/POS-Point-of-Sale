@@ -14,7 +14,13 @@ const taxSchema = new mongoose.Schema({
     CGST : {
         type :Number,
         required :true
+    },
+
+    product : {
+        type : mongoose.Schema.Types.ObjectId , ref : "Product" , 
+        required : true 
+        
     }
 });
 
-module.exports = mongoose.model('tax',taxSchema);
+module.exports = mongoose.model('Tax',taxSchema);

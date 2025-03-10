@@ -13,12 +13,14 @@ const authenticateToken = (req, res, next) => {
     }
     try {
         const verified = jwt.verify(token, process.env.JWT_SECRET);
-        req.user = verified;
+        console.log("Verified User: ", verified); // Debugging
+        req.user = verified; // Ensure this includes the role
         next();
     } catch (error) {
         res.status(400).json({ message: "Invalid token" });
     }
 };
+
 
 // Middleware to check roles
 function checkRole(allowedRoles) {
@@ -51,5 +53,15 @@ function checkRoleUser(allowedRoles) {
     };
 }
 
+const authorizeRoles = (roles) => {
+    return (req, res, next) => {
+        if (!roles.includes(req.user.role)) {
+            return res.status(403).json({ message: "Access denied!" });
+        }
+        next();
+    };
+};
+
+
 // Router
-module.exports = { authenticateToken, checkRole , checkRoleUser};
+module.exports = { authenticateToken , checkRoleUser ,checkRole , authorizeRoles};

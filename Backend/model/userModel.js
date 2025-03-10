@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
 const UserSchemaLogin = new mongoose.Schema({
-    name: {
+    username: {
         type: String,
         required: true
     },
@@ -19,7 +19,14 @@ const UserSchemaLogin = new mongoose.Schema({
         type: String,
         enum: ['admin', 'agent'],
         default: 'agent'
-    }
+    },
+    token: {
+        type:String,
+        required : true,
+        enum: ['admin', 'agent'],
+        
+    },
+
 }, {
     timestamps: true
 });
