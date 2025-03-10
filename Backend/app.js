@@ -29,8 +29,8 @@ mongoose.connect(MONGOURL)
 
     
 
-app.use('/admin', usersigninRoutes);
-app.use('/admin', productRoutes);
+app.use('/', usersigninRoutes);
+app.use('/admin',  productRoutes);
 app.use('/admin' , inventoryRoute);
 
 

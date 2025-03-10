@@ -20,6 +20,8 @@ const UserSchemaLogin = new mongoose.Schema({
         enum: ['admin', 'agent'],
         default: 'agent'
     }
+}, {
+    timestamps: true
 });
 
 // 🔹 Hash password before saving to the database

@@ -3,9 +3,18 @@ const productModel = require("../model/productModel.js");
 const mongoose = require('mongoose');
 
 
+
 // for some my purose ill check the post 
+const moment = require ('moment');
 exports.createItem = async (req ,res) => {
     try{
+
+        if (!moment (req.body.expirydate , 'YYYY-MM-DD' ,true).isValid()){
+            console.log("invalid expiry date " , req.body.expirydate);
+            return res.status(400).json({message : "please enter this format of this date YYYY-MM-DD"})
+
+        }
+
         const inventory = new inventoryModel(req.body);
         const savedInventory = await inventory.save();
         await productModel.findByIdAndUpdate(req.body.product,{

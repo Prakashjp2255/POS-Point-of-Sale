@@ -11,7 +11,12 @@ exports.createUser = async (req, res) => {
         console.log("inside try....");
 
         const userData = new userModel (req.body);
+
+        const validemail  = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
         const {email} = userData;
+        if (!validemail.test(email)) {
+            return res.status(422).json({error: "invalid email ! address "})
+        }
         
         const userExist = await userModel.findOne({ email });
         if (userExist) {
@@ -62,17 +67,31 @@ exports.fetchUsers = async (req, res) => {
 exports.updateUser = async (req, res) => {
     try {
         const id = req.params.id;
+        const { email } = req.body;
+
+        // Check if user exists
         const userExist = await userModel.findOne({ _id: id });
         if (!userExist) {
             return res.status(404).json({ message: "User not found." });
         }
+
+        // Check if the new email already exists
+        if (email && email !== userExist.email) {
+            const emailExist = await userModel.findOne({ email });
+            if (emailExist) {
+                return res.status(400).json({ message: "Email already exists." });
+            }
+        }
+
+        // Update user details
         const updatedUser = await userModel.findByIdAndUpdate(id, req.body, { new: true });
         res.status(200).json(updatedUser);
     } catch (error) {
-        console.error("Error updating user:", error); // Added log
+        console.error("Error updating user:", error);
         res.status(500).json({ error: "INTERNAL SERVER ERROR" });
     }
 };
+
 
 // Delete user by ID
 exports.deleteUser = async (req, res) => {
@@ -110,7 +129,7 @@ exports.loginUser = async (req, res) => {
         }
 
         // Password matches, generate token
-        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        const token = jwt.sign({ id: user._id  , role:user.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
         // Send success response
         return res.status(200).json({ message: "Successfully logged in!", token });

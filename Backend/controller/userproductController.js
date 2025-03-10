@@ -1,11 +1,11 @@
 const productModel = require("../model/productModel");
 const mongoose = require('mongoose');
-const inventoryModel = require("../model/inventoryModel.js");
 // Add a new product
 exports.createProduct = async (req, res) => {
     try {
         const product = new productModel(req.body);
         const savedProduct = await product.save();
+        console.log(savedProduct)
         res.status(201).json(savedProduct);
 
     } catch (error) {
