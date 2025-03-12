@@ -20,12 +20,6 @@ const UserSchemaLogin = new mongoose.Schema({
         enum: ['admin', 'agent'],
         default: 'agent'
     },
-    token: {
-        type:String,
-        required : true,
-        enum: ['admin', 'agent'],
-        
-    },
 
 }, {
     timestamps: true
