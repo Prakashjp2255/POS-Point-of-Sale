@@ -44,8 +44,8 @@ mongoose.connect(MONGOURL)
 // Routes setup
 app.use('/', userloginRoutes);
 app.use('/admin/users', productRoutes);
-app.use('/admin/inventory', inventoryRoutes);
-app.use('/admin/tax', taxRoutes);
+app.use('/admin/users/inventory', inventoryRoutes);
+app.use('/admin/users', taxRoutes);
 
 // CORS headers setup
 app.use((req, res, next) => {
