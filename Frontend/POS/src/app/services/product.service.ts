@@ -1,34 +1,37 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { log } from 'console';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProductService {
-  private apiUrl = 'http://localhost:4000/admin/users/login';
-  private apiUrl2 = 'http://localhost:4000/admin/users';
-  private productUrl ='http://localhost:4000/admin/users/product';
+  private apiUrl = 'http://localhost:4000/admin/users/allproducts';
+  private postapiUrl = 'http://localhost:4000/admin/users/product';
+  private editapiurl = 'http://localhost:4000/admin/users/product/:id/delete'
 
   constructor(private http: HttpClient) {}
 
-  getProducts(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/data`);
-    console.log(this.http.get);
+  getProducts(token: string): Observable<any> {
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get(`${this.apiUrl}`, { headers });
   }
 
-  createProduct(): Observable<any> {
-    return this.http.get(`${this.productUrl}/data`);
-    console.log(this.http.get);
+  createProduct(token: string, product: any): Observable<any> {
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.post(`${this.postapiUrl}`, product, { headers });
   }
 
-  editProduct(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/data`);
-    console.log(this.http.get);
+  editProduct(token: string, productId: string, updatedProduct: any): Observable<any> {
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.put(`${this.editapiurl}/${productId}`, updatedProduct, { headers });
   }
 
-  deletProduct(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/data`);
-    console.log(this.http.get);
+  deleteProduct(token: string, productId: string): Observable<any> {
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.delete(`${this.apiUrl}/${productId}`, { headers });
+    
+    
   }
 }

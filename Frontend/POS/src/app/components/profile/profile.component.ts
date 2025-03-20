@@ -1,30 +1,38 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthserviceService } from '../../services/authservice/authservice.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
-    selector: 'app-profile',
-    templateUrl: './profile.component.html',
-    styleUrls: ['./profile.component.css']
+  selector: 'app-profile',
+  standalone: true, // Standalone component
+  imports: [CommonModule], // Import CommonModule for Angular directives like *ngIf
+  templateUrl: './profile.component.html',
+  styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-    userProfile: any = {};
-    name: any;
+  userProfile: { name?: string; authToken?: string; email?: string; password?: string } | null = null; // Explicit type for userProfile
 
-    constructor(private AuthserviceService: AuthserviceService) {} 
-    ngOnInit(): void {
+  constructor() {}
 
-      if (this.userProfile.valid){
+  ngOnInit(): void {
+    console.log("Before navigation, checking authToken...");
 
-        this.name = this.userProfile.name; 
+    // Check if localStorage is available
+    if (typeof window !== 'undefined' && localStorage) {
+      const authToken = localStorage.getItem('authToken'); // Retrieve authToken safely
+
+      if (authToken) {
+        // Simulating the presence of additional data
+        this.userProfile = { authToken, name: 'John Doe' }; // Adding a sample name for better usability
+        console.log("User data found and set in userProfile:", this.userProfile);
+      } else {
+        console.log("User data not found. Redirecting to login...");
+        // Ideally, navigate to the login page if user data is missing
+        // For example, using Angular Router: this.router.navigate(['/login']);
       }
-
-        this.AuthserviceService.getUserProfile().subscribe(
-            (data: any) => {
-                this.userProfile = data;
-            },
-            (error: any) => {
-                console.error('Error fetching user profile:', error);
-            }
-        );
+    } else {
+      console.error("localStorage is not available.");
     }
+
+    console.log("Final userProfile:", this.userProfile);
+  }
 }

@@ -8,78 +8,35 @@
 </head>
 <body class="bg-white ">
 
-   <header class="w-full flex items-center justify-between px-6 py-3 shadow-md">
-    <!-- Hamburger Menu -->
-    <button class="p-3 bg-violet-600 text-white rounded-md">
-        <i class="fa-solid fa-bars-staggered"></i>
-    </button>
 
-    <!-- Search Box -->
-    <div class="relative w-96">
-        <i class="fa fa-search absolute left-3 top-3 text-gray-500"></i>
-        <input
-            type="text"
-            class="w-full pl-10 pr-4 py-2 bg-violet-100 rounded-lg focus:outline-none text-black"
-            placeholder="Search a Products">
-    </div>
+  <div class=" back-border rounded-lg bg-slate-200  p-4 m-auto">
 
-    <!-- Icons Section -->
-    <div class="flex items-center gap-9">
-        <!-- Cart Icon with Badge -->
-        <div class="relative">
-            <button class="p-3 border border-indigo-600 text-violet-700 rounded-md">
-                <i class="fa-solid fa-cart-shopping"></i>
-            </button>
-            <span class="  absolute -top-2 -right-2 bg-red-600 text-white text-xs px-2 py-1 rounded-full"> {{clickCount}}  </span><span
-            *ngIf="clickCount > 0"
-            class="absolute -top-2 -right-2 bg-red-600 text-white text-xs px-2 py-1 rounded-full"
-        >
-            {{ clickCount }}
+    <!-- // here the products you add  -->
 
-        </span>
-        </div>
-
-        <!-- User Profile Icon with Dropdown -->
-        <div class="relative group">
-            <!-- Profile Button -->
-            <button (click)="toggleDropdown()" class="p-3 bg-violet-600 text-white rounded-md">
-                <i class="fa-solid fa-circle-user"></i>
-            </button>
-
-            <!-- Dropdown Menu -->
-            <div *ngIf="isDropdownVisible" class="absolute right-0 mt-2 bg-white border border-gray-300 rounded-lg shadow-lg w-48">
-                <ul class="py-2">
-                    <li class="px-4 py-2 hover:bg-gray-100 flex items-center gap-2" (click)="onClick()">
-                        <i class="fa-regular fa-user text-black bg-white"></i>
-                        <a href="#" class="text-black">My Profile</a>
-                    </li>
-                    <li class="px-4 py-2 hover:bg-gray-100 flex items-center gap-2">
-                        <i class="fa-solid fa-user-pen text-blue-600"></i>
-                        <a href="#" class="text-black">Edit Profile</a>
-                    </li>
-                    <li class="px-4 py-2 hover:bg-gray-100 flex items-center gap-2">
-                        <i class="fa-solid fa-right-from-bracket text-red-600"></i>
-                        <a href="#" class="text-black">Logout</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</header> 
-
-<div class=" front-banner rounded-md bg-welcome-bg">
+    <!-- <div class=" front-banner rounded-md bg-welcome-bg">
   <div class="w-full h-full rounded-md  flex items-center justify-center">
   <p class="text-2xl font-manrope font-bold text-white">Flavor That Brings You Home! 🍽️✨</p>
   </div>
+  </div> -->
+
+
   </div>
+
+<!-- <div class=" front-banner rounded-md bg-welcome-bg">
+  <div class="w-full h-full rounded-md  flex items-center justify-center">
+  <p class="text-2xl font-manrope font-bold text-white">Flavor That Brings You Home! 🍽️✨</p>
+  </div>
+  </div> -->
+
+
 
 
 <!-- Products Section -->
-<section class="px-6 py-8">
+<!-- <section class="px-6 py-8">
     <h2 class="text-2xl font-bold mb-8 text-violet-600">Our Delicious Foods</h2>
-    <div class="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
+    <div class="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3"> -->
       <!-- Product Card: Pizza -->
-      <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+      <!-- <div class="bg-white shadow-lg rounded-lg overflow-hidden">
         <img class="w-full h-40 object-cover" src="https://img.freepik.com/premium-photo/pizza-slice_26791-1624.jpg" alt="Pizza">
         <div class="p-4">
           <h3 class="text-xl font-semibold text-violet-600">Pizza</h3>
@@ -90,9 +47,9 @@
             <button class="bg-red-600 font-bold text-white px-3 py-1 rounded-md hover:bg-red-700" (click)=" cartRemove()" >Remove Item</button>
           </div>
         </div>
-      </div>
+      </div> -->
       <!-- Product Card: Burger -->
-      <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+      <!-- <div class="bg-white shadow-lg rounded-lg overflow-hidden">
         <img class="w-full h-40 object-cover" src="https://media.istockphoto.com/id/178503913/photo/homemade-hamburger.jpg?s=612x612&w=0&k=20&c=uQnXOl0tPEGkUeuXsvXFtLgnvhiBT4vSSmw1mKCzItk=" alt="Burger">
         <div class="p-4">
           <h3 class="text-xl font-semibold text-violet-600">Burger</h3>
@@ -104,9 +61,9 @@
             
           </div>
         </div>
-      </div>
+      </div> -->
       <!-- Product Card: Pasta -->
-      <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+      <!-- <div class="bg-white shadow-lg rounded-lg overflow-hidden">
         <img class="w-full h-40 object-cover" src="https://th.bing.com/th/id/OIP.JwQ8kXoKXifED6kouyb90AHaE8?w=2121&h=1414&rs=1&pid=ImgDetMain" alt="Pasta">
         <div class="p-4">
           <h3 class="text-xl font-semibold text-violet-600">Pasta</h3>
@@ -117,9 +74,9 @@
             <button class="bg-red-600 font-bold text-white px-3 py-1 rounded-md hover:bg-red-700" (click)=" cartRemove()" >Remove Item</button>
           </div>
         </div>
-      </div>
+      </div> -->
       <!-- Product Card: Salad -->
-      <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+      <!-- <div class="bg-white shadow-lg rounded-lg overflow-hidden">
         <img class="w-full h-40 object-cover" src="https://img.freepik.com/premium-photo/salad-with-fruit-vegetables-plate_802668-1502.jpg" alt="Salad">
         <div class="p-4">
           <h3 class="text-xl font-semibold text-violet-600">Salad</h3>
@@ -130,9 +87,9 @@
             <button class="bg-red-600 font-bold text-white px-3 py-1 rounded-md hover:bg-red-700" (click)=" cartRemove()" >Remove Item</button>
           </div>
         </div>
-      </div>
+      </div> -->
       <!-- Product Card: Ice Cream -->
-      <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+      <!-- <div class="bg-white shadow-lg rounded-lg overflow-hidden">
         <img class="w-full h-40 object-cover" src="https://th.bing.com/th/id/R.a138116142d93a4af4909ab2912a798b?rik=GXeF%2fljMjHzU%2bQ&riu=http%3a%2f%2fimages6.fanpop.com%2fimage%2fphotos%2f33300000%2fICE-CREAM-ice-cream-33393414-1366-768.jpg&ehk=T%2fqslPB4raqEjOsbL%2f4ijLNHbdzSKpLKkwiq1xs0H5M%3d&risl=&pid=ImgRaw&r=0" alt="Ice Cream">
         <div class="p-4">
           <h3 class="text-xl font-semibold text-violet-600">Ice Cream</h3>
@@ -143,9 +100,9 @@
             <button class="bg-red-600 font-bold text-white px-3 py-1 rounded-md hover:bg-red-700" (click)=" cartRemove()" >Remove Item</button>
           </div>
         </div>
-      </div>
+      </div> -->
       <!-- Product Card: Sandwich -->
-      <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+      <!-- <div class="bg-white shadow-lg rounded-lg overflow-hidden">
         <img class="w-full h-40 object-cover" src="https://wallpapercave.com/wp/wp2053456.jpg" alt="Sandwich">
         <div class="p-4">
           <h3 class="text-xl font-semibold text-violet-600">Sandwich</h3>
@@ -158,7 +115,7 @@
         </div>
       </div>
     </div>
-  </section>
+  </section> -->
 
 
     <!-- cover section  -->

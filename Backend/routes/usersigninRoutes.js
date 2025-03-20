@@ -1,16 +1,32 @@
 const express = require('express');
 const router = express.Router();
+const mongoose = require('mongoose');
 const usersigninController = require('../controller/usersigninController');
-const { authenticateToken, checkRole, checkRoleUser } = require('../middleware/middleware');
- 
-// Only admin can access these routes
-router.post('/admin/users/signup', usersigninController.createUser);
-router.post('/admin/users/login', usersigninController.loginUser);
+const { authenticateToken, checkRoleUser } = require('../middleware/middleware');
 
-router.get('/admin/users', authenticateToken, checkRoleUser(['admin' ]), usersigninController.fetchUsers);
-router.get('/admin/users/:id', authenticateToken, checkRoleUser(['admin' ]), usersigninController.fetchUsersbyid);
-router.put('/admin/users/:id', authenticateToken, checkRoleUser(['admin' , 'agent' ]), usersigninController.updateUser);
-router.delete('/admin/users/:id', authenticateToken, checkRoleUser(['admin']), usersigninController.deleteUser);
+// ✅ User Authentication Routes
+router.post('/signup', usersigninController.createUser);
+router.post('/login', usersigninController.loginUser);
+
+// ✅ Fetch All Users
+router.get('/', authenticateToken, checkRoleUser(['admin', 'agent']), usersigninController.fetchUsers);
+
+// ✅ Fetch User by ID (Must be defined **after all specific routes**)
+router.get('/:id', authenticateToken, checkRoleUser(['admin', 'agent']), usersigninController.fetchUsersbyid);
+
+// ✅ Update User
+router.put('/:id', authenticateToken, checkRoleUser(['admin', 'agent']), usersigninController.updateUser);
+
+// ✅ Delete User
+router.delete('/:id', authenticateToken, checkRoleUser(['admin', 'agent']), (req, res, next) => {
+    if (!mongoose.isValidObjectId(req.params.id)) {
+        return res.status(400).json({ error: 'Invalid user ID format' });
+    }
+    next();
+}, usersigninController.deleteUser);
+
+module.exports = router;
+
 
 // Only agents can update their details
 
@@ -24,4 +40,4 @@ router.delete('/admin/users/:id', authenticateToken, checkRoleUser(['admin']), u
 //     next();
 // }, usersigninController.updateUser);
 
-module.exports = router;
+

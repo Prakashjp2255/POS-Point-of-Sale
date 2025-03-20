@@ -58,6 +58,8 @@ export class LoginComponent {
           
           console.log('Login Successful:', response);
           this.router.navigate(['/product']);
+          localStorage.setItem('user', JSON.stringify(response.user));
+          console.log('localStorage.getItem ',localStorage.getItem('user'))
         },
         error: (error) => {
           console.error('Login Failed:', error);

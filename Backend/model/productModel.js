@@ -17,10 +17,10 @@ const Productshow = new mongoose.Schema ( {
         type : String ,
         required : true
     },
-    // tax : {
-    //     type : mongoose.Schema.Types.ObjectId , ref: "Tax", 
-    //     required : true 
-    // }
+    tax : {
+        type : mongoose.Schema.Types.ObjectId , ref: "Tax", 
+        required : true 
+    }
     
 
 

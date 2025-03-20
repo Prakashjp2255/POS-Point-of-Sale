@@ -1,0 +1,82 @@
+<header class="w-full flex items-center justify-between px-6 py-3 shadow-md">
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+  />
+  <!-- Hamburger Menu -->
+  <!-- <button class="p-3 bg-violet-600 text-white rounded-md">
+      <i class="fa-solid fa-bars-staggered"></i>
+    </button> -->
+
+  <!-- Navbar Section -->
+  <nav class="flex gap-6">
+    <a
+      href="#"
+      class="text-violet-700 hover:text-violet-900 font-medium"
+      (click)="productClick()"
+      >Products</a
+    >
+    <a href="#" class="text-violet-700 hover:text-violet-900 font-medium"
+      >Inventory</a
+    >
+    <a href="#" class="text-violet-700 hover:text-violet-900 font-medium"
+      >Users</a
+    >
+  </nav>
+
+  <!-- Search Box -->
+  <!-- <div class="relative w-96">
+      <i class="fa fa-search absolute left-3 top-3 text-gray-500"></i>
+      <input
+        type="text"
+        class="w-full pl-10 pr-4 py-2 bg-violet-100 rounded-lg focus:outline-none text-black"
+        placeholder="Search a Products"
+      />
+    </div> -->
+
+  <!-- Icons Section -->
+  <div class="flex items-center gap-9">
+    <!-- Cart Icon with Badge -->
+    <div class="relative">
+      <button class="p-3 border border-indigo-600 text-violet-700 rounded-md">
+        <i class="fa-solid fa-cart-shopping"></i>
+      </button>
+      <span
+        class="absolute -top-2 -right-2 bg-red-600 text-white text-xs px-2 py-1 rounded-full"
+      >
+        {{ clickCount }}
+      </span>
+    </div>
+
+    <!-- User Profile Icon with Dropdown -->
+    <div class="relative group">
+      <!-- Profile Button -->
+      <button
+        (click)="toggleDropdown()"
+        class="p-3 bg-violet-600 text-white rounded-md"
+      >
+        <i class="fa-solid fa-circle-user"></i>
+      </button>
+
+      <!-- Dropdown Menu -->
+      <div
+        *ngIf="isDropdownVisible"
+        class="absolute right-0 mt-2 bg-white border border-gray-300 rounded-lg shadow-lg w-48"
+      >
+        <ul class="py-2">
+          <li
+            class="px-4 py-2 hover:bg-gray-100 flex items-center gap-2"
+            
+          >
+            <i class="fa-regular fa-user text-black bg-white"></i>
+            <a href="#" class="text-black" routerLink="/profile" (click)="onClick()">My Profile</a>
+          </li>
+          <li class="px-4 py-2 hover:bg-gray-100 flex items-center gap-2">
+            <i class="fa-solid fa-right-from-bracket text-red-600"></i>
+            <a href="#" class="text-black">Logout</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</header>

@@ -1,16 +1,15 @@
 const express = require("express");
 const router = express.Router();
-const userproductController = require("../controller/userproductController");  // Ensure correct import
-const protect = require("../authenticate/authentication"); // Ensure middleware is correct
+const userproductController = require("../controller/userproductController");
+const protect = require("../authenticate/authentication");
+const { authorizeRoles } = require('../middleware/middleware');
 
-const { authorizeRoles, checkRole, checkRoleUser } = require('../middleware/middleware');
-// Route definitions
-router.post("/product", protect, authorizeRoles(['admin', 'agent']) ,userproductController.createProduct);
-
-router.get("/products" , protect,authorizeRoles(['admin', 'agent']) , userproductController.getProduct);
-router.get("/product/:id" , protect, authorizeRoles(['admin', 'agent']) , userproductController.getProductById);
-router.put("/product/:id/update" , protect, authorizeRoles(['admin', 'agent']) , userproductController.updateProduct);
-router.delete("/product/:id/delete" , protect, authorizeRoles(['admin', 'agent']) , userproductController.deleteProduct);
+// ✅ Product Routes
+router.post("/product", protect, authorizeRoles(['admin', 'agent']), userproductController.createProduct);
+router.get("/allproducts", protect, authorizeRoles(['admin', 'agent']), userproductController.getProduct);
+router.get("/product/:id", protect, authorizeRoles(['admin', 'agent']), userproductController.getProductById);
+router.put("/product/:id/update", protect, authorizeRoles(['admin', 'agent']), userproductController.updateProduct);
+router.delete("/product/:id/delete", protect, authorizeRoles(['admin', 'agent']), userproductController.deleteProduct);
 
 module.exports = router;
 

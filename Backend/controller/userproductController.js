@@ -21,15 +21,18 @@ exports.createProduct = async (req, res) => {
 // Get all products
 exports.getProduct = async (req, res) => {
     try {
-      console.log("Fetching all products");
-      const products = await productModel.find();
-      res.status(200).json(products);
+        console.log("Fetching all products");
+        
+        // Corrected `.find()` usage
+        const allproducts = await productModel.find({}).populate('tax');
+
+        res.status(200).json(allproducts);
     } catch (error) {
-      console.error("Error fetching products:", error);
-      res.status(500).json({ error: "Internal Server Error" });
+        console.error("Error fetching products:", error.message);
+        res.status(500).json({ error: "Internal Server Error" });
     }
-  };
-  
+};
+
 
 // Get a product by ID
 // Get a product by ID with inventory details

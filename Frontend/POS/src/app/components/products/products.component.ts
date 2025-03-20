@@ -1,19 +1,26 @@
-import { CommonModule } from '@angular/common';
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProductService } from '../../services/product.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-products',
+  standalone: true,
   imports: [CommonModule],
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.css'],
 })
-export class ProductsComponent {
-  constructor(
-    private router: Router,
-    private productService: ProductService,
-  ) {}
+export class ProductsComponent implements OnInit {
+  isDropdownVisible: boolean = true;
+  clickCount: number = 0;
+  isLoading: boolean = false;
+  error: string | null = null;
+
+  constructor(private router: Router, private productService: ProductService) {}
+
+  ngOnInit(): void {
+    this.getAllProducts();
+  }
 
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent): void {
@@ -23,69 +30,44 @@ export class ProductsComponent {
     }
   }
 
-  isDropdownVisible = false;
-
   toggleDropdown(): void {
     this.isDropdownVisible = !this.isDropdownVisible;
   }
 
-  onClick() {
-    this.router.navigate(['/profile']); // Navigate to the profile page
+  onClick(): void {
+    this.router.navigate(['/profile']);
   }
 
-  clickCount = 0;
-
-  cartClick() {
+  cartClick(): void {
     this.clickCount++;
   }
 
-  cartRemove() {
-    if (this.clickCount != 0) {
+  cartRemove(): void {
+    if (this.clickCount > 0) {
       this.clickCount--;
     }
   }
 
-  getAllProducts() {
-    this.productService.getProducts().subscribe({
-      next: (response) => {
-        console.log('Products :', response);
-      },
-      error: (err) => {
-        console.log('Fail Products :', err);
-      },
-    });
-  }
+  private getAllProducts(): void {
+    this.isLoading = true;
+    const token = localStorage.getItem('authToken'); // Retrieve the token from localStorage
 
-  createProduct() {
-    this.productService.createProduct().subscribe({
-      next: (response) => {
-        console.log('Products :', response);
-      },
-      error: (err) => {
-        console.log('Fail Products :', err);
-      },
-    });
-  }
-
-  editProduct() {
-    this.productService.editProduct().subscribe({
-      next: (response) => {
-        console.log('Products :', response);
-      },
-      error: (err) => {
-        console.log('Fail Products :', err);
-      },
-    });
-  }
-
-  removeProduct() {
-    this.productService.deletProduct().subscribe({
-      next: (response) => {
-        console.log('Products :', response);
-      },
-      error: (err) => {
-        console.log('Fail Products :', err);
-      },
-    });
+    if (token) {
+      this.productService.getProducts(token).subscribe({
+        next: (response) => {
+          console.log('Products:', response);
+          this.isLoading = false;
+        },
+        error: (err) => {
+          console.error('Failed to fetch products:', err);
+          this.error = 'Failed to fetch products. Please try again later.';
+          this.isLoading = false;
+        },
+      });
+    } else {
+      console.error('No token found. Please log in.');
+      this.error = 'No token found. Please log in.';
+      this.isLoading = false;
+    }
   }
 }
